@@ -23,7 +23,7 @@ def main():
     print('Establish connection with Twitter API...')
     try:
         api = get_twitter_api()
-    except ConnectionError:
+    except Exception:
         print('Connection failed')
         print('Shutting Down NLTK Twitter Bot')
         exit()

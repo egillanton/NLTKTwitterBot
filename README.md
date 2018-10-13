@@ -14,7 +14,7 @@ The project is python project created within Pycharm as a python project.
 
 
 ## Authors
-  * [Ásmundur Guðjónsson](https://github.com/) - MSc. Language Technology Student
+  * [Ásmundur Guðjónsson](https://github.com/asmundur) - MSc. Language Technology Student
   * [Egill Anton Hlöðversson](https://github.com/egillanton) - MSc. Language Technology Student
 
 ## License
