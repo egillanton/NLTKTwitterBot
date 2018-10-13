@@ -6,8 +6,9 @@
 
 ---
 ## Project
-In this project the team implemented a Twitter bot, generating tweets from a trained 
+In this project the team implemented a Twitter bot ([MLVmot](https://twitter.com/MlVbot)), generating tweets from a trained 
 corpus trained with the [NTLK](https://github.com/nltk/nltk) library.
+
 
 ## Setup
 The project is python project created within Pycharm as a python project.
