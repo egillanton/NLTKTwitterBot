@@ -6,14 +6,14 @@
 
 ---
 ## Project
-In this project the team implementd a Twitter bot generated tweets from  a trained corpus 
-with the use of the [NTLK](https://github.com/nltk/nltk) library.
+In this project the team implemented a Twitter bot, generating tweets from a trained 
+corpus trained with the [NTLK](https://github.com/nltk/nltk) library.
 
 ## Setup
 The project is python project created within Pycharm as a python project.
 
 
-## Author
+## Authors
   * [Ásmundur Guðjónsson](https://github.com/) - MSc. Language Technology Student
   * [Egill Anton Hlöðversson](https://github.com/egillanton) - MSc. Language Technology Student
 
