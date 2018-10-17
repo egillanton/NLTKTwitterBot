@@ -1,5 +1,11 @@
 import json
-import Twitter
+import re
+import string
+
+import nltk
+from nltk.corpus import stopwords
+
+from Twitter import Twitter
 
 
 def shutdown_server():
@@ -12,9 +18,9 @@ def connect_to_twitter():
     try:
         api = Twitter.get_api()
     except Exception:
-        print('Connection failed')
+        print('Connection failed\n')
         shutdown_server()
-    print('Connection Established')
+    print('Connection Established\n')
     return api
 
 
@@ -40,15 +46,58 @@ def gather_data(api):
     return sents
 
 
-def model(input):
-    # TODO split input on Space
-    # TODO Remove punctuations
+def clean_tweet(a_str):
+    if a_str == '':
+        return a_str
+
+    a_str = re.sub(r"@[A-z]+\w", '', a_str)
+    a_str = re.sub(r"\bhttps:.*\b", '', a_str)
+    a_str = re.sub(r"\bRT\b", '', a_str)
+    a_str = ''.join([char for char in a_str if char not in string.punctuation])
+    a_str = a_str.strip()
+    return a_str
+
+
+
+def model(api, a_input_str):
+    a_input_str = clean_tweet(a_input_str)
+    a_input_str_tokens = a_input_str.split()
+
     # TODO Remove Stop Words
+    tokens = [token for token in a_input_str_tokens if token not in stopwords.words('english')]
+    tagged_tokens = nltk.pos_tag(tokens)
+
     # TODO Get Nouns
+    noun_set = ["NN", "NNS"]
+    NN_words = [word for (word, tag) in tagged_tokens if tag in noun_set]
+
     # TODO Generate responses for given nouns
+    sents = []
+    for q in NN_words:
+        print(f'Getting Data for: {q}')
+        r = api.request('search/tweets', {'q': q,
+                                          'lang': 'eng',
+                                          'include_entities': 'false',
+                                          'result_type': 'recent',
+                                          '-filter': 'retweets',
+                                          'count': '10'})
+        for item in r:
+            full_r = api.request('statuses/show/:' + str(item['id']))
+
+            if full_r.status_code == 200:
+                tweet = full_r.json()
+                text = tweet['text'] if 'text' in tweet else ''
+                text = clean_tweet(text)
+                if (q,text) not in sents:
+                    sents.append((q, text))
+        print('Waiting between Requests')
+
     # TODO return The Most relevant response
-    output = ''
-    return output
+    if len(sents) > 0:
+        a_output_str = sents[0][1]
+    else:
+        a_output_str = ''
+    return clean_tweet(a_output_str)
 
 
 def tweet(api, tweet_message):
@@ -60,28 +109,20 @@ def tweet(api, tweet_message):
 
 def reply_to(api, tweet_message, in_reply_to_status_id):
     r = api.request('statuses/update', {'status': tweet_message, 'in_reply_to_status_id': in_reply_to_status_id})
-    print(f'Tweeted:\n{tweet_message}\nwith Status Code: {r.status_code}')
+    print(f'\nTweeted:\n{tweet_message}\nwith Status Code: {r.status_code}')
+    # start_time = time.time()
+    # if time.time() - start_time > time.time(20):
+
 
 
 def main():
     print('Starting Up NLTK Twitter Bot')
-
-    api = connect_to_twitter()
-
-    # sents = gather_data(api)
-
-    # Train Corpus
-    # print('Training Corpus...')
-    # Evaluate
-
-    # Tweet First Tweet
-    # tweet_message = 'Hello, is anybody out there?'
-    # my_tweet_data = tweet(api, tweet_message)
+    twitter = Twitter()
 
     my_bot_id = '1051128664631517185'
 
     # Establishing user stream for my bot
-    r = api.request('statuses/filter', {'follow': my_bot_id})
+    r = twitter.api.request('statuses/filter', {'follow': my_bot_id})
 
     # For every activity regarding my bot
     for item in r:
@@ -93,18 +134,20 @@ def main():
             sender_tweet_text = item['text'] if 'text' in item else ''
 
             # Analyse Comment
-            # TODO: Create Model
-            # model_output = model(sender_tweet_text)
+            model_output = model(twitter.api, sender_tweet_text)
             # Generate response
-            if sender_user_name != '':
-                response = 'Ohh Hello there, thanks for noticing me!'
-                # TODO: Replace with Output of the Model
-                # my_bot_response =  f'@{username} {model_output}'
-                my_bot_response = f'@{sender_user_name} {response}'
-                # Tweet response
-                reply_to(api, my_bot_response, sender_tweet_id)
+            if sender_user_name != '' and model_output != '':
+                my_bot_response = f'@{sender_user_name} {model_output}'
+                reply_to(twitter.api, my_bot_response, sender_tweet_id)
 
     print('Shutting Down NLTK Twitter Bot')
 
 
 main()
+
+# twitter = Twitter()
+# sents = twitter.get_tweets('cars')
+# print(f'len(sents): {len(sents)}')
+# out = model(api, '@MLVbot: car cat and pineapples https://t.co/m7LvMabAM5')
+# print(f'Model Output: \n{out}\n')
+
