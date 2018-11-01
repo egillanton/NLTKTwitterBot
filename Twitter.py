@@ -7,7 +7,7 @@ class Twitter:
     __consumer_secret = 'rKF7W6gxbt9ArjIrrCRvDwxUBQrRROAvRl5hDHm7cAnOpOcWo6'
     __access_token_key = '1051128664631517185-FQhAHJo6WixffqbgIYjXUzYM6YFwO9'
     __access_token_secret = 'hUE0TTAdYclgbhPcUxwpPINx326VzCgaqmQf8PMk0s3Ys'
-    __my_bot_id = '1051128664631517185'
+    __user_id_str = '1051128664631517185'
 
     def __init__(self):
         print('Establish connection with Twitter API...')
@@ -19,7 +19,7 @@ class Twitter:
                                   self.__access_token_secret)
         except Exception:
             print('Connection failed\n')
-        self.user_id_str = self.__my_bot_id
+        self.user_id_str = self.__user_id_str
 
         print('Connection Established\n')
 
@@ -46,4 +46,4 @@ class Twitter:
         print(f'\nTweeted:\n{tweet_message}\nwith Status Code: {r.status_code}')
 
     def get_user_stream(self):
-        return self.api.request('statuses/filter', {'follow': self.my_bot_id})
+        return self.api.request('statuses/filter', {'follow': self.user_id_str})

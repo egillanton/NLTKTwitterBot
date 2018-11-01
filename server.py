@@ -5,6 +5,8 @@ import copy
 from tqdm import trange
 from nltk import ConditionalFreqDist
 from Twitter import Twitter
+from reynir import Reynir
+import re
 
 
 def get_corpus_from_file(path):
@@ -14,9 +16,9 @@ def get_corpus_from_file(path):
     for i in t:
         fin = open(file_names[i], 'r', encoding='utf-8')
         tokens = []
-        punctuations = [".", ",", ";", ":", "?", "!"]
+        punctuation = [".", ",", ";", ":", "?", "!"]
         for line in fin:
-            if line.strip() and line.split()[0].strip() not in punctuations:
+            if line.strip() and line.split()[0].strip() not in punctuation:
                 tokens.append(line.split()[0].strip())
             else:
                 corpus.append(copy.deepcopy(tokens))
@@ -67,6 +69,33 @@ def generate_sent(cdf, words, max_words):
     return a_str
 
 
+def clean_tweet(a_str):
+    if a_str == '':
+        return a_str
+
+    a_str = re.sub(r"@[A-z]+\w", '', a_str)
+    a_str = re.sub(r"\bhttps:.*\b", '', a_str)
+    a_str = re.sub(r"\bRT\b", '', a_str)
+    punctuation = [".", ",", ";", ":", "?", "!"]
+    a_str = ''.join([char for char in a_str if char not in punctuation])
+    a_str = a_str.strip()
+
+    return a_str
+
+
+def get_reply_message(cdf, a_input_str):
+    r = Reynir()
+    a_input_str = clean_tweet(a_input_str)
+    job = r.submit(a_input_str)
+
+    words = []
+    # Iterate through sentences and parse each one
+    for sent in job:
+        words.extend([word.lower() for word in sent.tree.nouns])
+    n = len(cdf.conditions()[0])
+    return generate_sent(cdf, words[:n], 15)
+
+
 def main():
     path = './data/IFD1_SETS'
     corpus = get_corpus_from_file(path)
@@ -91,8 +120,8 @@ def main():
             sender_tweet_text = item['text'] if 'text' in item else ''
 
             # Analyse Comment
-            # model_output = model(twitter.api, sender_tweet_text)
-            model_output = ""
+            model_output = get_reply_message(cdf,sender_tweet_text)
+
 
             # Generate response
             if sender_user_name != '' and model_output != '':
