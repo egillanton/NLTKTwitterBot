@@ -83,7 +83,7 @@ def main():
 
     # Establishing user stream for my bot
     for item in twitter.get_user_stream():
-        if 'in_reply_to_user_id_str' in item and item['in_reply_to_user_id_str'] == my_bot_id:
+        if 'in_reply_to_user_id_str' in item and item['in_reply_to_user_id_str'] == twitter.user_id_str:
             # Receive data about the sender and the tweet
             sender_tweet_id = item['id'] if 'id' in item else ''
             sender_user_id = item['id_str'] if 'id_str' in item else ''

@@ -19,6 +19,7 @@ class Twitter:
                                   self.__access_token_secret)
         except Exception:
             print('Connection failed\n')
+        self.user_id_str = self.__my_bot_id
 
         print('Connection Established\n')
 
