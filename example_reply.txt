@@ -1,0 +1,88 @@
+{
+  "created_at": "Sun Oct 14 13:49:04 +0000 2018",
+  "id": 1051469943894622200,
+  "id_str": "1051469943894622211",
+  "text": "@MlVbot Flottur!",
+  "truncated": false,
+  "entities": {
+    "hashtags": [],
+    "symbols": [],
+    "user_mentions": [
+      {
+        "screen_name": "MlVbot",
+        "name": "MLVbot",
+        "id": 1051128664631517200,
+        "id_str": "1051128664631517185",
+        "indices": [
+          0,
+          7
+        ]
+      }
+    ],
+    "urls": []
+  },
+  "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+  "in_reply_to_status_id": 1051441373407322100,
+  "in_reply_to_status_id_str": "1051441373407322113",
+  "in_reply_to_user_id": 1051128664631517200,
+  "in_reply_to_user_id_str": "1051128664631517185",
+  "in_reply_to_screen_name": "MlVbot",
+  "user": {
+    "id": 1439304024,
+    "id_str": "1439304024",
+    "name": "Tómas Helgason",
+    "screen_name": "TmasHelgas",
+    "location": "Reykjavik",
+    "description": "No globo homo. RIP #SkyKing",
+    "url": null,
+    "entities": {
+      "description": {
+        "urls": []
+      }
+    },
+    "protected": false,
+    "followers_count": 75,
+    "friends_count": 841,
+    "listed_count": 0,
+    "created_at": "Sat May 18 20:07:19 +0000 2013",
+    "favourites_count": 3557,
+    "utc_offset": null,
+    "time_zone": null,
+    "geo_enabled": false,
+    "verified": false,
+    "statuses_count": 524,
+    "lang": "en",
+    "contributors_enabled": false,
+    "is_translator": false,
+    "is_translation_enabled": false,
+    "profile_background_color": "C0DEED",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_tile": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/991254739533881344/48rSEsAI_normal.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/991254739533881344/48rSEsAI_normal.jpg",
+    "profile_banner_url": "https://pbs.twimg.com/profile_banners/1439304024/1525168917",
+    "profile_link_color": "1DA1F2",
+    "profile_sidebar_border_color": "C0DEED",
+    "profile_sidebar_fill_color": "DDEEF6",
+    "profile_text_color": "333333",
+    "profile_use_background_image": true,
+    "has_extended_profile": false,
+    "default_profile": true,
+    "default_profile_image": false,
+    "following": false,
+    "follow_request_sent": false,
+    "notifications": false,
+    "translator_type": "none"
+  },
+  "geo": null,
+  "coordinates": null,
+  "place": null,
+  "contributors": null,
+  "is_quote_status": false,
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "favorited": false,
+  "retweeted": false,
+  "lang": "is"
+}
